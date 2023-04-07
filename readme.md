@@ -3,7 +3,7 @@
 [![Latest Version][badge-release]][release]
 [![Total Downloads][badge-downloads]][downloads]
 
-`this package forked from `[sineld/money](https://github.com/sineld/money)`  repository, discount and data types have been added. `
+this package forked from `[sineld/money](https://github.com/sineld/money)`  repository, discount and data types have been added.
 
 `ferdiunal/money` is a PHP library to make working with money easier! No static properties or methods!
 
