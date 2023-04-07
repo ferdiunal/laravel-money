@@ -6,6 +6,10 @@
         "name": "Sinan Eldem",
         "email": "sinan@sinaneldem.com.tr",
         "homepage": "https://sinaneldem.com.tr"
+    }, {
+        "name": "Ferdi UNAL",
+        "email": "ferdiunal@outlook.com",
+        "homepage": "https://twitter.com/__ferdiunal"
     }],
     "homepage": "https://github.com/ferdiunal/money",
     "keywords": [
@@ -15,7 +19,7 @@
         "laravel"
     ],
     "require": {
-        "php": ">=5.6"
+        "php": ">=8.1"
     },
     "autoload": {
 		"files": ["src/Money.php"]
