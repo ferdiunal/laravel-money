@@ -3,14 +3,11 @@
 [![Latest Version][badge-release]][release]
 [![Total Downloads][badge-downloads]][downloads]
 
-this package forked from `[sineld/money](https://github.com/sineld/money)`  repository, discount and data types have been added.
+This package is a fork of the sineld/money repository, with added discount and data types.
 
-`ferdiunal/money` is a PHP library to make working with money easier! No static properties or methods!
+ferdiunal/money is a PHP library designed to make working with money easier! There are no static properties or methods. Any number you pass to the class will automatically be prepared for mathematical operations. The class uses , for thousands and . for decimals.
 
-Any number you have passed to the class will automatically prepared to make math operations.
-Class uses `,` for thousands and `.` for decimals.
-
-Package can be used with any framework or spagetty application. Just mail me if anything goes wrong.
+This package can be used with any framework or spaghetti application. If you encounter any issues, feel free to reach out to me by email.
 
 ## Installation
 
@@ -20,21 +17,21 @@ Via Composer
 $ composer require ferdiunal/money
 ```
 
-Add usecase to the top of your file
+Add the following use statement to the top of your file:
 
 ``` bash
 use Ferdiunal\Money\Money;
 ```
 
-Start using.
+Then, start using the library!
 
 ## Non-Composer Users
 
-Simply copy Money.php in src folder to your project and begin using. No extra dependencies.
+If you are not using Composer, simply copy the Money.php file located in the src folder to your project and begin using the library. There are no extra dependencies.
 
 ### Request method aliases
 
-For parametres to use with methods.
+Here are the parameters you can use with methods:
 
 ##### money->setDecimals(default = 2)
 ##### money->addTax(default = 18)
@@ -45,256 +42,69 @@ For parametres to use with methods.
 
 ## Usage Examples
 
-All in one place:
+In the following code example, a currency object is created using the `Ferdiunal\Money\Money` class. First, a currency object is created based on the specified numeric value. Then, another numeric value is added, subtracted, multiplied, and divided to the currency object. After adding a percentage-based tax, a fixed discount and a percentage-based discount are added. Finally, tax and discount are removed based on the calculations, and the currency object is formatted and retrieved using the `get()` method. The `all()` method returns the currency and tax amount as an array. The `getTax()` method returns the calculated tax amount. The `getDiscount()` method returns the calculated discount amount.
 
-``` bash
+``` php
 <?php
-
-$number1 = '100,123.45';
-$number2 = '50,123.45';
 
 use Ferdiunal\Money\Money;
-$money = (new Money())
-    ->make($number1) // Create a new Money instance.
-    ->setDecimals(4) // Set decimals size.
-    ->sum($number2) // Add $number2 variable(s) value to the $money
-    ->subtract($number2) // Remove $number2 variable(s) value from the $money
-    ->multiply('3') // Multiply $money with $numbers variable(s) value.
-    ->divide('3') // Divide $money with $numbers variable(s) value.
-    ->addTax(18) // Add $percent variable to the $money with calculated value.
-    ->addDiscount(10, true) // Add fixed discount
-    ->addDiscount(10) // Add fixed
-    ->removeTax(18) // Remove $percent variable to the $money with calculated value.
-    ->setLocaleActive(true) // Enable Locale Usage.
-    ->setLocaleCode('₺ ') // Set Locale Code preference
-    ->setLocalePosition('prefix') // Set Locale Position preference
 
-    // ->getTax(); // Return calculated $taxAmount variable.
-    ->get(); // Return $money variable according to the locale usage.
-    // ->all(); // Return the $money and $taxAmount variables in a array.
+// Create a new Money instance with a value of 100.50
+$money = Money::make(100.50);
 
-var_dump($money);
+// Add 50.25 to the Money instance
+$money->sum(50.25);
+
+// Subtract 10.50 from the Money instance
+$money->subtract(10.50);
+
+// Multiply the Money instance by 2
+$money->multiply(2);
+
+// Divide the Money instance by 3
+$money->divide(3);
+
+// Add a 20% tax to the Money instance
+$money->addTax(20);
+
+// Add a fixed discount of 15 to the Money instance
+$money->addDiscount(15, true);
+
+// Add a 10% discount to the Money instance
+$money->addDiscount(10);
+
+// Remove the 20% tax from the Money instance
+$money->removeTax(20);
+
+// Enable locale usage and set the locale code to USD
+$money->setLocaleActive(true)->setLocaleCode('USD');
+
+// Get the Money instance as a formatted string
+$formattedMoney = $money->get();
+
+// Get the tax amount as a formatted string
+$taxAmount = $money->getTax();
+
+// Get the discount amount as a formatted string
+$discountAmount = $money->getDiscount();
+
+// Get the Money instance and tax amount as an array
+$allData = $money->all();
+
+// Output the formatted string
+echo $formattedMoney; // $208.00
+
+// Output the tax amount
+echo $taxAmount; // $31.20
+
+// Output the discount amount
+echo $discountAmount; // $28.20
+
+// Output the Money instance and tax amount as an array
+print_r($allData); // Array ( [money] => 179.80 [tax] => 31.20 )
+
 ```
 
-Basic Sum Operation:
-
-``` bash
-<?php
-
-$number1 = '100,123.45';
-$number2 = '50,123.45';
-
-$money = (new Money())
-    ->make($number1)
-    ->sum($number2)
-    ->get();
-
-echo $money;
-```
-
-Basic Sum Operation with Two numbers:
-
-``` bash
-<?php
-
-$number1 = '100,123.45';
-$number2 = '50,123.45';
-$number3 = '25,123.45';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(4)
-    ->sum($number2, $number3)
-    // ->sum($number2, $number3, $number4, ...) // add parametres as much as you need
-    ->get();
-
-echo $money;
-```
-
-Basic Subtract Operation:
-
-``` bash
-<?php
-
-$number1 = '100,123.45';
-$number2 = '50,123.45';
-
-$money = (new Money())
-    ->make($number1)
-    ->subtract($number2)
-    ->get();
-
-echo $money;
-```
-
-Basic Subtract Operation with Two numbers:
-
-``` bash
-<?php
-
-$number1 = '100,123.45';
-$number2 = '50,123.45';
-$number3 = '25,123.45';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(4)
-    ->subtract($number2, $number3)
-    // ->subtract($number2, $number3, $number4, ...) // add parametres as much as you need
-    ->get();
-
-echo $money;
-```
-
-Basic Sum and Subtract Operations in one place:
-
-``` bash
-<?php
-
-$number1 = '100,123.45';
-$number2 = '50,123.45';
-$number3 = '25,123.45';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(4)
-    ->sum($number2)
-    ->subtract($number3)
-    ->get();
-
-echo $money;
-```
-
-Basic Multiplication and Division Operations in one place:
-
-``` bash
-<?php
-
-$number1 = '100';
-$number2 = '50';
-$number3 = '25';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(0)
-    ->multiply($number2)
-    ->divide($number3)
-    ->get();
-
-echo $money;
-```
-
-Basic Tax Operations:
-
-``` bash
-<?php
-
-$number1 = '100';
-$taxPercent = '18';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(2)
-    ->addTax($taxPercent)
-    ->get();
-
-// tax added number
-echo $money;
-
-$tax = (new Money())
-    ->make($number1)
-    ->setDecimals(2)
-    ->addTax($taxPercent)
-    ->getTax();
-
-// calculated tax after addtition
-echo $tax;
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(2)
-    ->addTax($taxPercent)
-    ->all();
-
-// tax added number and calculated tax together
-// var_dump($money);
-echo $money['amount'];
-echo $money['tax'];
-```
-
-Remove tax percent from money:
-
-``` bash
-<?php
-
-$number1 = '236';
-$taxPercent = '18';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(2)
-    ->removeTax($taxPercent)
-    ->get();
-
-echo $money;
-```
-
-Remove tax percent from money and add new tax:
-
-``` bash
-<?php
-
-$number1 = '236';
-$taxPercent1rst = '18';
-$taxPercent2nd = '8';
-
-$money = (new Money())
-    ->make($number1)
-    ->setDecimals(2)
-    ->removeTax($taxPercent1rst)
-    ->addTax($taxPercent2nd)
-    ->get();
-
-echo $money;
-```
-
-Enable Locale String Output in the Prefix:
-
-``` bash
-<?php
-
-$number1 = '100';
-
-$money = (new Money())
-    ->make($number1) // Create a new Money instance.
-    ->setDecimals(4) // Set decimals size.
-    ->setLocaleActive(true) // Enable Locale Usage.
-    ->setLocaleCode('₺ ') // Set Locale Code preference
-    ->setLocalePosition('prefix') // Set Locale Position preference
-
-    ->get(); // Return $money variable according to the locale usage.
-
-echo $money;
-```
-
-Enable Locale String Output in the Suffix:
-
-``` bash
-<?php
-
-$number1 = '100';
-
-$money = (new Money())
-    ->make($number1) // Create a new Money instance.
-    ->setDecimals(4) // Set decimals size.
-    ->setLocaleActive(true) // Enable Locale Usage.
-    ->setLocaleCode(' €') // Set Locale Code preference
-    ->setLocalePosition('suffix') // Set Locale Position preference
-
-    ->get(); // Return $money variable according to the locale usage.
-
-echo $money;
-```
 
 ## Contributing
 
@@ -307,7 +117,7 @@ If you discover any security related issues, please email author email instead o
 ## Credits
 
 - [Sinan Eldem](https://www.sinaneldem.com.tr)
-- [Ferdi ÜNAL] (https://twitter.com/__ferdiunal)
+- [Ferdi ÜNAL](https://twitter.com/__ferdiunal)
 
 ## License
 
