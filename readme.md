@@ -101,7 +101,7 @@ echo $taxAmount; // $31.20
 echo $discountAmount; // $28.20
 
 // Output the Money instance and tax amount as an array
-print_r($allData); // Array ( [money] => 179.80 [tax] => 31.20 )
+print_r($allData); // Array ( [money] => 179.80 [tax] => 31.20, [discount] => 28.20 )
 
 ```
 
