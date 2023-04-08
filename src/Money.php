@@ -266,7 +266,24 @@ class Money
      */
     public function get(): string
     {
-        $amount = $this->clear($this->amount);
+        return $this->format($this->amount);
+    }
+
+    /**
+     * Gets the calculated tax amount as a floating-point number.
+     */
+    public function getTax(bool $format = false): float
+    {
+        if($format) {
+            return $this->format($this->taxAmount);
+        }
+
+        return $this->taxAmount;
+    }
+
+    protected function format(float $amount)
+    {
+        $amount = $this->clear($amount);
         $amount = number_format($amount, $this->decimals, ',', '.');
 
         if ($this->localeActive) {
@@ -281,21 +298,16 @@ class Money
     }
 
     /**
-     * Gets the calculated tax amount as a floating-point number.
-     */
-    public function getTax(): float
-    {
-        return $this->taxAmount;
-    }
-
-    /**
      * Gets the calculated discount amount as a floating-point number.
      */
-    public function getDiscount(): float
+    public function getDiscount(bool $format = false): float
     {
+        if($format) {
+            return $this->format($this->discountAmount);
+        }
+
         return $this->discountAmount;
     }
-
 
     /**
      * Gets the monetary value and the calculated tax amount as an array.
