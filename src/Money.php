@@ -69,6 +69,12 @@ class Money
      */
     protected string $localePosition = 'prefix';
 
+
+    /**
+     * The calculated discount amount to be applied to the monetary value.
+     */
+    protected float $discountAmount = 0;
+
     /**
      * Creates a new Money instance with the given monetary value.
      */
@@ -210,6 +216,7 @@ class Money
     {
         $discount = $this->clear($this->amount) * ($this->clear($percent) / 100);
         $this->amount -= $discount;
+        $this->discountAmount = $discount;
         return $this;
     }
 
@@ -221,6 +228,7 @@ class Money
     protected function addFixedDiscount(float $amount): static
     {
         $this->amount -= $this->clear($amount);
+        $this->discountAmount = $this->clear($amount);
         return $this;
     }
 
@@ -281,6 +289,15 @@ class Money
     }
 
     /**
+     * Gets the calculated discount amount as a floating-point number.
+     */
+    public function getDiscount(): float
+    {
+        return $this->discountAmount;
+    }
+
+
+    /**
      * Gets the monetary value and the calculated tax amount as an array.
      */
     public function all(): array
@@ -291,6 +308,7 @@ class Money
         return [
             'amount' => $this->get(),
             'tax' => $this->getTax(),
+            'discount' => $this->getDiscount()
         ];
     }
 
